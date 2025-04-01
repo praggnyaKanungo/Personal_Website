@@ -45,9 +45,10 @@ This site is deployed using GitHub Pages and can be accessed at [https://praggny
 
 I plan to add more interactive features and projects to my portfolio as I continue to grow as a developer and researcher.
 
-## Special Thank Yous!
+## Acknowledgements
 
-I would like to give  special thank you to my peer, Geethan Sundaram who gave me this idea of creating a personal website that resembles a terminal. It was a idea that really stuck with me, and he encouraged me to make it myself. 
+I would like to give a special thank you to my peer, Geethan Sundaram, who had mentioned in a conversation that making a personal website that resembles a terminal would be very cool. It was an idea that really stuck with me, and with his encouragements to actually try it out, I ended up pursuing it. Thanks, Geethan! 
+
 ---
 
 Please feel free to explore my portfolio and reach out if you'd like to connect!
