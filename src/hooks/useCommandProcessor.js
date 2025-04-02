@@ -109,9 +109,112 @@ Self-published through Kindle Direct Publishing, June 2022
   }
 };
 
-const DIRECTORIES = {
-  '~': ['about', 'skills', 'projects', 'education', 'experience', 'publications', 'contact'],
-  '~/projects': PORTFOLIO_CONTENT.projects.map(project => project.name.toLowerCase().replace(/\s+/g, '-'))
+// Define file systems structure with separate directories
+const FILE_SYSTEM = {
+  '~': {
+    type: 'directory',
+    contents: {
+      'readme.md': { 
+        type: 'file', 
+        content: `# Welcome to Praggnya's Terminal Portfolio
+
+This is an interactive terminal-style portfolio website. Use commands like 'help', 'ls', 'cd', and 'cat' to navigate and explore.
+
+Type 'help' for a list of available commands.` 
+      },
+      'about': { 
+        type: 'directory',
+        contents: {
+          'index.md': { type: 'file', content: PORTFOLIO_CONTENT.about }
+        }
+      },
+      'skills': { 
+        type: 'directory',
+        contents: {
+          'index.md': { type: 'file', content: PORTFOLIO_CONTENT.skills }
+        }
+      },
+      'education': { 
+        type: 'directory',
+        contents: {
+          'index.md': { type: 'file', content: PORTFOLIO_CONTENT.education }
+        }
+      },
+      'experience': { 
+        type: 'directory',
+        contents: {
+          'index.md': { type: 'file', content: PORTFOLIO_CONTENT.experience }
+        }
+      },
+      'publications': { 
+        type: 'directory',
+        contents: {
+          'index.md': { type: 'file', content: PORTFOLIO_CONTENT.publications }
+        }
+      },
+      'contact': { 
+        type: 'directory',
+        contents: {
+          'index.md': { 
+            type: 'file', 
+            content: `# Contact Information
+
+- Email: ${PORTFOLIO_CONTENT.contact.email}
+- GitHub: [${PORTFOLIO_CONTENT.contact.github}](https://${PORTFOLIO_CONTENT.contact.github})
+- LinkedIn: [${PORTFOLIO_CONTENT.contact.linkedin}](https://${PORTFOLIO_CONTENT.contact.linkedin})
+- Phone: ${PORTFOLIO_CONTENT.contact.phone}
+
+Feel free to reach out to me through any of these channels!` 
+          }
+        }
+      },
+      'projects': { 
+        type: 'directory',
+        contents: PORTFOLIO_CONTENT.projects.reduce((acc, project) => {
+          const filename = project.name.toLowerCase().replace(/\s+/g, '-') + '.md';
+          acc[filename] = { 
+            type: 'file', 
+            content: `# ${project.name}
+
+${project.description}
+
+## Technologies
+${project.technologies.map(tech => `- ${tech}`).join('\n')}
+
+## Links
+[GitHub Repository](${project.link})`
+          };
+          return acc;
+        }, {})
+      }
+    }
+  }
+};
+
+// Helper function to get a file system item from a path
+const getItemAtPath = (path) => {
+  if (path === '~') {
+    return FILE_SYSTEM['~'];
+  }
+  
+  // Strip leading ~ and /
+  const cleanPath = path.replace(/^~\/?/, '');
+  if (!cleanPath) {
+    return FILE_SYSTEM['~'];
+  }
+  
+  // Navigate through the path
+  const parts = cleanPath.split('/');
+  let current = FILE_SYSTEM['~'];
+  
+  for (const part of parts) {
+    if (!current || current.type !== 'directory' || !current.contents[part]) {
+      return null;
+    }
+    current = current.contents[part];
+  }
+  
+  return current;
 };
 
 // Command processor hook
@@ -125,42 +228,73 @@ const useCommandProcessor = ({ currentDirectory, setCurrentDirectory, setHistory
       case 'help':
         return `Available commands:
   help - Display this help message
-  ls - List directory contents
+  ls [directory] - List directory contents
   cd [directory] - Change directory
   cat [file] - Display file contents
+  pwd - Print working directory
   clear - Clear the terminal
-  about - Display information about me
-  skills - List my technical skills
-  projects - View my projects
-  education - View my educational background
-  experience - View my work and leadership experience
-  publications - View my publications
-  contact - Display my contact information
-  theme [name] - Change terminal theme (try: 'cyberpunk', 'matrix', 'retro')
   echo [text] - Display a line of text
   whoami - Display current user
   date - Display current date and time
   banner - Display terminal banner
-  resume - Display my resume information
-  exit - Exit terminal (reload page)`;
+  exit - Exit terminal (reload page)
+
+Shortcuts for content (only work in home directory):
+  about - Navigate to about directory
+  skills - Navigate to skills directory
+  projects - Navigate to projects directory
+  education - Navigate to education directory
+  experience - Navigate to experience directory
+  publications - Navigate to publications directory
+  contact - Navigate to contact directory
+  resume - Display my resume information`;
       
       case 'ls':
-        if (args[1] === '-l') {
+        let targetPath = currentDirectory;
+        
+        // If a path is provided, adjust it relative to current directory
+        if (args[1]) {
+          if (args[1].startsWith('~')) {
+            targetPath = args[1];
+          } else if (args[1] === '..') {
+            // Go up one level
+            const parts = currentDirectory.split('/');
+            if (parts.length > 1) {
+              parts.pop();
+              targetPath = parts.join('/');
+            } else {
+              targetPath = '~';
+            }
+          } else {
+            // Append to current path
+            targetPath = currentDirectory === '~' 
+              ? `~/${args[1]}` 
+              : `${currentDirectory}/${args[1]}`;
+          }
+        }
+        
+        const dirItem = getItemAtPath(targetPath);
+        
+        if (!dirItem || dirItem.type !== 'directory') {
+          return `ls: ${args[1] || ''}: No such directory`;
+        }
+        
+        const files = Object.keys(dirItem.contents);
+        
+        if (files.length === 0) {
+          return 'No files in this directory.';
+        }
+        
+        if (args.includes('-l')) {
           // Detailed listing
-          const files = DIRECTORIES[currentDirectory] || [];
-          if (files.length === 0) return 'No files in this directory.';
-          
           return files.map(file => {
-            const isDir = file.indexOf('.') === -1;
+            const isDir = dirItem.contents[file].type === 'directory';
             return `${isDir ? 'd' : '-'}rwxr-xr-x  1 praggnya  users  ${Math.floor(Math.random() * 10000)}  Apr 1 2025  ${file}${isDir ? '/' : ''}`;
           }).join('\n');
         } else {
           // Simple listing
-          const files = DIRECTORIES[currentDirectory] || [];
-          if (files.length === 0) return 'No files in this directory.';
-          
           return files.map(file => {
-            const isDir = file.indexOf('.') === -1;
+            const isDir = dirItem.contents[file].type === 'directory';
             return `${file}${isDir ? '/' : ''}`;
           }).join('  ');
         }
@@ -171,121 +305,71 @@ const useCommandProcessor = ({ currentDirectory, setCurrentDirectory, setHistory
           return '';
         }
         
-        if (args[1] === '..') {
-          if (currentDirectory === '~') {
-            return 'Already at home directory.';
+        let newPath;
+        if (args[1].startsWith('~')) {
+          newPath = args[1];
+        } else if (args[1] === '..') {
+          // Go up one level
+          const parts = currentDirectory.split('/');
+          if (parts.length > 1) {
+            parts.pop();
+            newPath = parts.join('/');
+          } else {
+            newPath = '~';
           }
-          setCurrentDirectory('~');
-          return '';
+        } else {
+          // Append to current path
+          newPath = currentDirectory === '~' 
+            ? `~/${args[1]}` 
+            : `${currentDirectory}/${args[1]}`;
         }
         
-        const targetDir = `${currentDirectory}/${args[1]}`;
-        if (DIRECTORIES[targetDir]) {
-          setCurrentDirectory(targetDir);
-          return '';
-        } else if (DIRECTORIES[currentDirectory]?.includes(args[1]) && !args[1].includes('.')) {
-          setCurrentDirectory(`${currentDirectory}/${args[1]}`);
-          return '';
-        } else {
+        const targetDir = getItemAtPath(newPath);
+        
+        if (!targetDir) {
           return `cd: ${args[1]}: No such directory`;
         }
+        
+        if (targetDir.type !== 'directory') {
+          return `cd: ${args[1]}: Not a directory`;
+        }
+        
+        setCurrentDirectory(newPath);
+        return '';
       
       case 'cat':
         if (!args[1]) {
           return 'Usage: cat [file]';
         }
         
-        // Check if file exists in portfolio content
-        if (args[1] === 'about' || args[1] === 'about.md') {
-          return PORTFOLIO_CONTENT.about;
-        } else if (args[1] === 'skills' || args[1] === 'skills.md') {
-          return PORTFOLIO_CONTENT.skills;
-        } else if (args[1] === 'education' || args[1] === 'education.md') {
-          return PORTFOLIO_CONTENT.education;
-        } else if (args[1] === 'experience' || args[1] === 'experience.md') {
-          return PORTFOLIO_CONTENT.experience;
-        } else if (args[1] === 'publications' || args[1] === 'publications.md') {
-          return PORTFOLIO_CONTENT.publications;
-        } else if (args[1] === 'contact' || args[1] === 'contact.md') {
-          const contact = PORTFOLIO_CONTENT.contact;
-          return `# Contact Information
-
-- Email: ${contact.email}
-- GitHub: [${contact.github}](https://${contact.github})
-- LinkedIn: [${contact.linkedin}](https://${contact.linkedin})
-- Phone: ${contact.phone}
-
-Feel free to reach out to me through any of these channels!`;
-        } else if (args[1] === 'projects' || args[1] === 'projects.md') {
-          const projects = PORTFOLIO_CONTENT.projects;
-          return `# Projects\n\n${projects.map(project => (
-            `## ${project.name}\n${project.description}\n\nTechnologies: ${project.technologies.join(', ')}\n\nLink: [GitHub Repository](${project.link})`
-          )).join('\n\n')}`;
+        let filePath;
+        if (args[1].startsWith('~')) {
+          filePath = args[1];
         } else {
-          // Check for specific project files
-          const projectName = args[1].replace('.md', '');
-          const project = PORTFOLIO_CONTENT.projects.find(p => 
-            p.name.toLowerCase().replace(/\s+/g, '-') === projectName
-          );
-          
-          if (project) {
-            return `# ${project.name}
-
-${project.description}
-
-## Technologies
-${project.technologies.map(tech => `- ${tech}`).join('\n')}
-
-## Links
-[GitHub Repository](${project.link})`;
-          }
-          
-          return `cat: ${args[1]}: No such file`;
+          // Relative to current directory
+          filePath = currentDirectory === '~' 
+            ? `~/${args[1]}` 
+            : `${currentDirectory}/${args[1]}`;
         }
+        
+        const fileItem = getItemAtPath(filePath);
+        
+        if (!fileItem) {
+          return `cat: ${args[1]}: No such file or directory`;
+        }
+        
+        if (fileItem.type !== 'file') {
+          return `cat: ${args[1]}: Is a directory`;
+        }
+        
+        return fileItem.content;
+      
+      case 'pwd':
+        return currentDirectory;
       
       case 'clear':
         setHistory([]);
         return '';
-      
-      case 'about':
-        return PORTFOLIO_CONTENT.about;
-      
-      case 'skills':
-        return PORTFOLIO_CONTENT.skills;
-      
-      case 'projects':
-        const projects = PORTFOLIO_CONTENT.projects;
-        return `# Projects\n\n${projects.map(project => (
-          `## ${project.name}\n${project.description}\n\nTechnologies: ${project.technologies.join(', ')}\n\nLink: [GitHub Repository](${project.link})`
-        )).join('\n\n')}`;
-      
-      case 'education':
-        return PORTFOLIO_CONTENT.education;
-      
-      case 'experience':
-        return PORTFOLIO_CONTENT.experience;
-      
-      case 'publications':
-        return PORTFOLIO_CONTENT.publications;
-      
-      case 'contact':
-        const contact = PORTFOLIO_CONTENT.contact;
-        return `# Contact Information
-
-- Email: ${contact.email}
-- GitHub: [${contact.github}](https://${contact.github})
-- LinkedIn: [${contact.linkedin}](https://${contact.linkedin})
-- Phone: ${contact.phone}
-
-Feel free to reach out to me through any of these channels!`;
-      
-      case 'theme':
-        if (!args[1]) {
-          return 'Usage: theme [name] - Available themes: cyberpunk, matrix, retro, default';
-        }
-        
-        // This will be handled by the parent component through a callback
-        return `Theme changed to ${args[1]}. Type 'theme default' to reset.`;
       
       case 'echo':
         return args.slice(1).join(' ');
@@ -310,6 +394,51 @@ Feel free to reach out to me through any of these channels!`;
 Type 'help' to see available commands.
 `;
       
+      case 'exit':
+        window.location.reload();
+        return 'Exiting...';
+      
+      // Content shortcuts - only work in home directory
+      case 'about':
+      case 'skills':
+      case 'education':
+      case 'experience':
+      case 'publications':
+      case 'contact':
+      case 'projects':
+        // Only allow these shortcuts from the home directory
+        if (currentDirectory !== '~') {
+          return `Command '${command}' is only available in the home directory (~).
+Use 'cd ~' to return home first.`;
+        }
+        
+        // Change to the directory
+        const targetDirectory = `~/${command}`;
+        const dirExists = getItemAtPath(targetDirectory);
+        
+        if (!dirExists) {
+          return `${command}: Directory not found`;
+        }
+        
+        setCurrentDirectory(targetDirectory);
+        
+        // For content directories, show the content automatically
+        if (command !== 'projects') {
+          // Show the content of index.md
+          const indexFile = getItemAtPath(`${targetDirectory}/index.md`);
+          if (indexFile && indexFile.type === 'file') {
+            return `Changed to ${command} directory.\n\n${indexFile.content}`;
+          }
+        } else {
+          // For projects, just list available projects
+          const projectFiles = Object.keys(FILE_SYSTEM['~'].contents.projects.contents);
+          const projectNames = projectFiles.map(file => file.replace('.md', '')).join(', ');
+          
+          return `Changed to projects directory.\n\nAvailable projects: ${projectNames}\n\nUse 'cat [project-name].md' to view details of a specific project.`;
+        }
+        
+        return `Changed to ${command} directory.`;
+      
       case 'resume':
         return `# Praggnya Kanungo - Resume
 
@@ -329,11 +458,7 @@ Python, Java, C, C++, JavaScript, ReactJS, Swift, Linux, Raspberry Pi, MATLAB, R
 - Beginner HTML & CSS Programmer, Girls Who Code
 - Certified Entry-Level Python Programmer, Python Institute
 
-For more details, type 'education', 'experience', or 'skills'.`;
-      
-      case 'exit':
-        window.location.reload();
-        return 'Exiting...';
+Navigate to specific sections using 'cd education', 'cd experience', etc.`;
       
       default:
         if (command.startsWith('./')) {

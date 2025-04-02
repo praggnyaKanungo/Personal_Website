@@ -56,7 +56,18 @@ const ThemeToggle = styled.button`
   }
 `;
 
-function TerminalHeader() {
+// Format the title based on current directory
+const formatTitle = (directory) => {
+  if (directory === '~') {
+    return 'praggnyakanungo@portfolio ~ ';
+  } else {
+    // Extract directory name for display
+    const dirName = directory.split('/').pop();
+    return `praggnyakanungo@portfolio ${directory} `;
+  }
+};
+
+function TerminalHeader({ currentDirectory }) {
   return (
     <Header>
       <ControlButtons>
@@ -65,7 +76,7 @@ function TerminalHeader() {
         <ControlButton color="var(--success)" />
       </ControlButtons>
       
-      <Title>praggnyakanungo@portfolio ~ </Title>
+      <Title>{formatTitle(currentDirectory)}</Title>
       
       <ThemeToggle title="Change theme">
         🎨

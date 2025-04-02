@@ -31,11 +31,10 @@ const SystemOutput = styled(OutputLine)`
 
 const CommandOutput = styled(OutputLine)`
   color: var(--text-color);
+`;
 
-  &::before {
-    content: '$ ';
-    color: var(--accent);
-  }
+const DirectoryPrefix = styled.span`
+  color: var(--accent);
 `;
 
 const ResponseOutput = styled(OutputLine)`
@@ -98,6 +97,15 @@ const parseLinks = (text) => {
   return parts;
 };
 
+// Format the directory prompt for commands
+const formatDirectoryPrompt = (directory) => {
+  if (directory === '~') {
+    return '~$';
+  } else {
+    return directory + '$';
+  }
+};
+
 function TerminalOutput({ history }) {
   return (
     <OutputContainer>
@@ -106,7 +114,12 @@ function TerminalOutput({ history }) {
           case 'system':
             return <SystemOutput key={index}>{parseLinks(item.content)}</SystemOutput>;
           case 'command':
-            return <CommandOutput key={index}>{item.content}</CommandOutput>;
+            return (
+              <CommandOutput key={index}>
+                <DirectoryPrefix>{formatDirectoryPrompt(item.directory)} </DirectoryPrefix>
+                {item.content}
+              </CommandOutput>
+            );
           case 'response':
             return <ResponseOutput key={index}>{parseLinks(item.content)}</ResponseOutput>;
           case 'error':

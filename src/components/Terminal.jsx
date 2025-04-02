@@ -89,7 +89,7 @@ function Terminal() {
     setHistory([
       {
         type: 'system',
-        content: `Welcome to Your Terminal Portfolio!
+        content: `Welcome to Praggnya's Terminal Portfolio!
 Type 'help' to see available commands.`
       }
     ]);
@@ -103,7 +103,8 @@ Type 'help' to see available commands.`
   }, [history]);
 
   const handleCommand = (command) => {
-    setHistory(prev => [...prev, { type: 'command', content: command }]);
+    // Add the command to history with current directory
+    setHistory(prev => [...prev, { type: 'command', content: command, directory: currentDirectory }]);
     
     // Process the command and get response
     const response = processCommand(command);
@@ -116,7 +117,7 @@ Type 'help' to see available commands.`
 
   return (
     <TerminalWindow>
-      <TerminalHeader />
+      <TerminalHeader currentDirectory={currentDirectory} />
       <TerminalBody ref={terminalBodyRef}>
         <TerminalOutput history={history} />
         <TerminalInput 

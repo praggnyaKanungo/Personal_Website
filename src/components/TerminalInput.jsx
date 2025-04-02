@@ -57,6 +57,16 @@ function TerminalInput({ onSubmit, currentDirectory }) {
   const containerRef = useRef(null);
   const promptWidth = useRef(0);
 
+  // Format the prompt to show the current directory
+  const formatPrompt = (dir) => {
+    if (dir === '~') {
+      return '~$';
+    } else {
+      // Extract the directory name from the path
+      return dir + '$';
+    }
+  };
+
   useEffect(() => {
     // Focus the input when component mounts
     inputRef.current.focus();
@@ -69,7 +79,7 @@ function TerminalInput({ onSubmit, currentDirectory }) {
   }, []);
 
   useEffect(() => {
-    // Update cursor position on input change
+    // Update cursor position on input change or directory change
     const position = promptWidth.current + getCursorPosition();
     setCursorPosition(position);
   }, [input, currentDirectory]);
@@ -119,7 +129,7 @@ function TerminalInput({ onSubmit, currentDirectory }) {
 
   return (
     <InputContainer ref={containerRef} onClick={handleClick}>
-      <Prompt>{currentDirectory}$</Prompt>
+      <Prompt>{formatPrompt(currentDirectory)}</Prompt>
       <InputField
         ref={inputRef}
         type="text"
