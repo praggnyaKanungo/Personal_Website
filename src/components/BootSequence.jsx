@@ -255,10 +255,12 @@ const bootMessages = [
   { text: 'Loading kernel modules... [ OK ]', delay: 0.8 },
   { text: 'Checking filesystem integrity... [ OK ]', delay: 1.3 },
   { text: 'Mounting virtual filesystem... [ OK ]', delay: 1.8 },
-  { text: 'Starting network services... [ OK ]', delay: 2.3 },
-  { text: 'Loading personal data... [ OK ]', delay: 2.7 },
-  { text: 'Initializing portfolio interface... [ OK ]', delay: 3.1 },
-  { text: 'System ready. Welcome!', delay: 3.6 }
+  { text: 'Starting terminal services... [ OK ]', delay: 2.3 },
+  { text: 'Loading portfolio data... [ OK ]', delay: 2.7 },
+  { text: 'Connecting to UVA systems... [ OK ]', delay: 3.1 },
+  { text: 'Initializing perception modules... [ OK ]', delay: 3.4 },
+  { text: 'Loading project data... [ OK ]', delay: 3.7 },
+  { text: 'System ready. Welcome, Praggnya!', delay: 4.0 }
 ];
 
 function BootSequence({ onComplete }) {
@@ -277,7 +279,7 @@ function BootSequence({ onComplete }) {
     
     const completeTimeout = setTimeout(() => {
       onComplete();
-    }, 4000);
+    }, 4500);
     
     return () => {
       clearInterval(interval);
@@ -288,8 +290,8 @@ function BootSequence({ onComplete }) {
   return (
     <BootContainer>
       <Scanline />
-      <LogoContainer data-text="PORTFOLIO">
-        <Logo>PORTFOLIO</Logo>
+      <LogoContainer data-text="PRAGGNYA.KANUNGO">
+        <Logo>PRAGGNYA.KANUNGO</Logo>
       </LogoContainer>
       
       <BootLog>

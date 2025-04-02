@@ -42,23 +42,6 @@ const dash = keyframes`
   }
 `;
 
-const shootingStar = keyframes`
-  0% { 
-    transform: translateX(0) translateY(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
-  100% { 
-    transform: translateX(${props => props.direction === 'left' ? '-' : ''}100px) translateY(100px);
-    opacity: 0;
-  }
-`;
-
 const AppContainer = styled.div`
   height: 100%;
   width: 100%;
@@ -99,20 +82,17 @@ const Star = styled.div`
   z-index: 1;
   box-shadow: 0 0 ${props => props.size * (props.isBright ? 4 : 2)}px ${props => props.isBright ? 'rgba(255, 250, 210, 0.9)' : 'rgba(255, 255, 255, 0.7)'};
   
-  // Add a subtle tail for bright stars
-  ${props => props.isBright ? `
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: ${props.size * 3}px;
-      height: ${props.size * 3}px;
-      background: radial-gradient(circle, rgba(255, 255, 210, 0.6) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-    }
-  ` : ''}
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: ${props => props.size * 3}px;
+    height: ${props => props.size * 3}px;
+    background: radial-gradient(circle, rgba(255, 255, 210, 0.6) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+  }
 `;
 
 const ConstellationLine = styled.path`
@@ -227,7 +207,7 @@ function App() {
       const endStar = newBrightStars[Math.floor(Math.random() * brightStarCount)];
       
       // Avoid connecting a star to itself and only connect if they're not too far apart
-      if (startStar.id !== endStar.id) {
+      if (startStar && endStar && startStar.id !== endStar.id) {
         const distance = Math.sqrt(
           Math.pow(startStar.left - endStar.left, 2) + 
           Math.pow(startStar.top - endStar.top, 2)
@@ -276,7 +256,7 @@ function App() {
       const endNode = newNodes[Math.floor(Math.random() * nodeCount)];
       
       // Avoid connecting a node to itself
-      if (startNode.id !== endNode.id) {
+      if (startNode && endNode && startNode.id !== endNode.id) {
         newConnections.push({
           id: `connection-${i}`,
           startX: startNode.left,

@@ -4,110 +4,113 @@ import { useCallback } from 'react';
 const PORTFOLIO_CONTENT = {
   about: `# About Me
 
-I am a Computer Science major with a passion for teaching and research. My goal is to become a professor and contribute to the advancement of computer science through both education and research.
+I'm Praggnya Kanungo, a Computer Science and Data Science student at the University of Virginia (Class of 2027), with an intended early graduation. I'm passionate about technology, research, and creating educational resources.
 
-My research interests include:
-- Artificial Intelligence
-- Human-Computer Interaction
+My primary interests include:
+- Autonomous Systems and Robotics
+- Machine Learning and AI
 - Computer Science Education
+- Making technology accessible to underserved communities
 
-I currently teach computer science for a non-profit organization, helping students from diverse backgrounds discover the joy of programming and problem-solving.`,
+Currently, I work as a Perception Engineer for Cavalier Autonomous Racing, where I help develop and integrate technologies for autonomous vehicles.`,
 
   skills: `# Skills
 
 ## Programming Languages
-- Python
-- JavaScript/TypeScript
+- Python (Certified Entry-Level Python Programmer)
 - Java
 - C/C++
+- JavaScript/TypeScript
 - SQL
 
 ## Web Development
-- React
+- HTML/CSS (Certified by Girls Who Code)
+- React.js
 - Node.js
-- HTML/CSS
-- Next.js
-- RESTful APIs
 
 ## Other Technical Skills
-- Machine Learning
-- Data Analysis
+- ROS (Robot Operating System)
+- Raspberry Pi
+- Linux
+- MATLAB
 - Git/GitHub
-- Linux/Unix
-- Algorithms & Data Structures`,
+- Data Structures & Algorithms`,
 
   projects: [
     {
-      name: "AI Study Assistant",
-      description: "An intelligent study tool that uses NLP to help students create and review flashcards more effectively.",
-      technologies: ["Python", "TensorFlow", "React", "MongoDB"],
-      link: "https://github.com/yourusername/ai-study-assistant"
+      name: "PiCar to DeepPiCar",
+      description: "Creating an autonomous driving vehicle using Raspberry Pi and deep learning techniques for obstacle detection and navigation.",
+      technologies: ["Python", "Raspberry Pi", "Deep Learning", "Computer Vision"],
+      link: "https://github.com/praggnyakanungo/deeppicar"
     },
     {
-      name: "Algorithmic Visualization Platform",
-      description: "An interactive web platform that visualizes various algorithms to help CS students understand complex concepts.",
-      technologies: ["JavaScript", "D3.js", "React", "Node.js"],
-      link: "https://github.com/yourusername/algo-viz"
+      name: "Stone Bridge CSHS Computer Resources",
+      description: "Led a team of 50 high school CS students to create educational resources for AP Computer Science A, which were translated to Odia and Hindi for schools in India.",
+      technologies: ["Educational Content", "Project Management", "Translation"],
+      link: "https://github.com/praggnyakanungo/cs-resources"
     },
     {
-      name: "CS Education Research Tool",
-      description: "A platform for collecting and analyzing data on how students learn programming concepts.",
-      technologies: ["Python", "Django", "PostgreSQL", "Data Analysis"],
-      link: "https://github.com/yourusername/cs-edu-research"
+      name: "Portfolio Website From Scratch",
+      description: "Developed this interactive terminal-style portfolio website using React and styled-components to showcase my projects and skills.",
+      technologies: ["React", "JavaScript", "Styled Components", "HTML/CSS"],
+      link: "https://github.com/praggnyakanungo/Personal_Website"
+    },
+    {
+      name: "C++ Mini Projects",
+      description: "Developed various applications including a calculator and a to-do list application using C++.",
+      technologies: ["C++", "Data Structures", "Algorithms"],
+      link: "https://github.com/praggnyakanungo/cpp-projects"
     }
   ],
 
   education: `# Education
 
 ## Computer Science, B.S.
-University of Example, 2019-2023
-- GPA: 3.95/4.0
-- Honors: Dean's List (All Semesters), Outstanding CS Student Award
-- Relevant Coursework: Algorithms, AI, Machine Learning, Database Systems, Software Engineering
+University of Virginia, School of Engineering and Applied Science, 2023-2026 (Expected)
+- Intended Early Graduation
+- Relevant Coursework: Data Structures and Algorithms, Discrete Mathematics and Theory, Computer Systems and Organization, Data Design II: Interactive App Design
 
-## Computer Science, M.S. (In Progress)
-Example State University, Expected 2025
-- Focus on CS Education and Human-Computer Interaction
-- Research Assistant in the Interactive Computing Lab`,
+## High School Diploma
+Stone Bridge High School, 2019-2023
+- Activities: Science National Honor Society, Mu Alpha Theta, National English Honor Society, National Honor Society
+- AP Scholar Award with Distinction`,
 
-  teaching: `# Teaching Experience
+  experience: `# Experience
 
-## Computer Science Instructor
-Tech For All Non-profit, 2021-Present
-- Teach introductory and intermediate programming courses to high school students
-- Developed custom curriculum focusing on project-based learning
-- Mentored over 100 students, with 85% reporting increased interest in pursuing CS careers
+## Perception Engineer
+Cavalier Autonomous Racing, Spring 2024-Present
+- Working on the team's code stack for autonomous vehicle perception
+- Integrating Patchwork++ as a new ground filtering method to improve car performance
+- Studying ground filtering methods efficiently using ROS Humble
 
-## Teaching Assistant
-University of Example, 2020-2023
-- Assisted professors in Data Structures and Algorithms courses
-- Held weekly office hours and review sessions
-- Received Excellence in Teaching award (2022)`,
+## Founder & President
+The Pendulum Future, Fall 2022-Present
+- Leading a team to create computer science educational resources
+- Translating resources to minority languages and distributing them for free to remote villages worldwide
+- Organizing CS workshops for women in underdeveloped areas
 
-  research: `# Research Experience
+## Community Project Manager
+Computer Science Honor Society, Fall 2023-Spring 2022
+- Led a team of 50 CSHS members to create CS-related community service resources
+- Organized workshops and tutoring sessions for high school students`,
 
-## Human-Computer Interaction Lab
-Example State University, 2023-Present
-- Investigating novel interfaces for programming education
-- Developed prototype systems for visualizing code execution
-- Co-authored paper on "Improving Engagement in CS Education" (under review)
+  publications: `# Publications
 
-## Undergraduate Research Assistant
-University of Example AI Lab, 2021-2023
-- Contributed to project on automated assessment of student code
-- Collected and analyzed data on common programming misconceptions
-- Presented findings at University Research Symposium`,
+## The Girl and her Monsoons - Poems of the Pandemic
+Self-published through Kindle Direct Publishing, June 2022
+- A collection of poetry written during 2020-2022, reflecting on experiences during the pandemic era
+- Available on Amazon Kindle`,
 
   contact: {
-    email: "your.email@example.com",
-    github: "github.com/yourusername",
-    linkedin: "linkedin.com/in/yourusername",
-    twitter: "twitter.com/yourusername"
+    email: "ufx9hn@virginia.edu",
+    github: "github.com/praggnyakanungo",
+    linkedin: "linkedin.com/in/praggnya-kanungo",
+    phone: "646-221-7218"
   }
 };
 
 const DIRECTORIES = {
-  '~': ['about', 'skills', 'projects', 'education', 'teaching', 'research', 'contact'],
+  '~': ['about', 'skills', 'projects', 'education', 'experience', 'publications', 'contact'],
   '~/projects': PORTFOLIO_CONTENT.projects.map(project => project.name.toLowerCase().replace(/\s+/g, '-'))
 };
 
@@ -130,14 +133,15 @@ const useCommandProcessor = ({ currentDirectory, setCurrentDirectory, setHistory
   skills - List my technical skills
   projects - View my projects
   education - View my educational background
-  teaching - View my teaching experience
-  research - View my research experience
+  experience - View my work and leadership experience
+  publications - View my publications
   contact - Display my contact information
   theme [name] - Change terminal theme (try: 'cyberpunk', 'matrix', 'retro')
   echo [text] - Display a line of text
   whoami - Display current user
   date - Display current date and time
   banner - Display terminal banner
+  resume - Display my resume information
   exit - Exit terminal (reload page)`;
       
       case 'ls':
@@ -148,7 +152,7 @@ const useCommandProcessor = ({ currentDirectory, setCurrentDirectory, setHistory
           
           return files.map(file => {
             const isDir = file.indexOf('.') === -1;
-            return `${isDir ? 'd' : '-'}rwxr-xr-x  1 user  group  ${Math.floor(Math.random() * 10000)}  Mar 31 2025  ${file}${isDir ? '/' : ''}`;
+            return `${isDir ? 'd' : '-'}rwxr-xr-x  1 praggnya  users  ${Math.floor(Math.random() * 10000)}  Apr 1 2025  ${file}${isDir ? '/' : ''}`;
           }).join('\n');
         } else {
           // Simple listing
@@ -198,10 +202,10 @@ const useCommandProcessor = ({ currentDirectory, setCurrentDirectory, setHistory
           return PORTFOLIO_CONTENT.skills;
         } else if (args[1] === 'education' || args[1] === 'education.md') {
           return PORTFOLIO_CONTENT.education;
-        } else if (args[1] === 'teaching' || args[1] === 'teaching.md') {
-          return PORTFOLIO_CONTENT.teaching;
-        } else if (args[1] === 'research' || args[1] === 'research.md') {
-          return PORTFOLIO_CONTENT.research;
+        } else if (args[1] === 'experience' || args[1] === 'experience.md') {
+          return PORTFOLIO_CONTENT.experience;
+        } else if (args[1] === 'publications' || args[1] === 'publications.md') {
+          return PORTFOLIO_CONTENT.publications;
         } else if (args[1] === 'contact' || args[1] === 'contact.md') {
           const contact = PORTFOLIO_CONTENT.contact;
           return `# Contact Information
@@ -209,7 +213,7 @@ const useCommandProcessor = ({ currentDirectory, setCurrentDirectory, setHistory
 - Email: ${contact.email}
 - GitHub: [${contact.github}](https://${contact.github})
 - LinkedIn: [${contact.linkedin}](https://${contact.linkedin})
-- Twitter: [${contact.twitter}](https://${contact.twitter})
+- Phone: ${contact.phone}
 
 Feel free to reach out to me through any of these channels!`;
         } else if (args[1] === 'projects' || args[1] === 'projects.md') {
@@ -258,11 +262,11 @@ ${project.technologies.map(tech => `- ${tech}`).join('\n')}
       case 'education':
         return PORTFOLIO_CONTENT.education;
       
-      case 'teaching':
-        return PORTFOLIO_CONTENT.teaching;
+      case 'experience':
+        return PORTFOLIO_CONTENT.experience;
       
-      case 'research':
-        return PORTFOLIO_CONTENT.research;
+      case 'publications':
+        return PORTFOLIO_CONTENT.publications;
       
       case 'contact':
         const contact = PORTFOLIO_CONTENT.contact;
@@ -271,7 +275,7 @@ ${project.technologies.map(tech => `- ${tech}`).join('\n')}
 - Email: ${contact.email}
 - GitHub: [${contact.github}](https://${contact.github})
 - LinkedIn: [${contact.linkedin}](https://${contact.linkedin})
-- Twitter: [${contact.twitter}](https://${contact.twitter})
+- Phone: ${contact.phone}
 
 Feel free to reach out to me through any of these channels!`;
       
@@ -287,21 +291,45 @@ Feel free to reach out to me through any of these channels!`;
         return args.slice(1).join(' ');
       
       case 'whoami':
-        return 'visitor@portfolio';
+        return 'praggnya@portfolio';
       
       case 'date':
         return new Date().toString();
       
       case 'banner':
         return `
- _____           _            _  _       
-|  _  |___ ___ _| |___ ___ _| |_|___ ___ 
-|   __|  _| . | . | . | . | . | |   | . |
-|__|  |_| |___|___|___|___|___|_|_|_|_  |
-                                    |___|
+ _____                                         _  __                             
+|  __ \\                                       | |/ /                             
+| |__) | __ __ _  __ _  __ _ _ __  _   _  __ _| ' / __ _ _ __  _   _ _ __   __ _ ___ 
+|  ___/ '__/ _\` |/ _\` |/ _\` | '_ \\| | | |/ _\` |  < / _\` | '_ \\| | | | '_ \\ / _\` / _ \\
+| |   | | | (_| | (_| | (_| | | | | |_| | (_| | . \\ (_| | | | | |_| | | | | (_| | (_) |
+|_|   |_|  \\__,_|\\__, |\\__, |_| |_|\\__, |\\__,_|_|\\_\\__,_|_| |_|\\__,_|_| |_|\\__, |\\___/
+                  __/ | __/ |       __/ |                                   __/ |     
+                 |___/ |___/       |___/                                   |___/      
 
 Type 'help' to see available commands.
 `;
+      
+      case 'resume':
+        return `# Praggnya Kanungo - Resume
+
+## Education
+University of Virginia, School of Engineering and Applied Science
+B.S. Computer Science, Expected May 2026 (Intended Early Graduation)
+
+## Experience
+- Perception Engineer, Cavalier Autonomous Racing (Spring 2024-Present)
+- Founder & President, The Pendulum Future (Fall 2022-Present)
+- Community Project Manager, Computer Science Honor Society (Fall 2023-Spring 2022)
+
+## Skills
+Python, Java, C, C++, JavaScript, ReactJS, Swift, Linux, Raspberry Pi, MATLAB, ROS, Graphic Design
+
+## Certifications
+- Beginner HTML & CSS Programmer, Girls Who Code
+- Certified Entry-Level Python Programmer, Python Institute
+
+For more details, type 'education', 'experience', or 'skills'.`;
       
       case 'exit':
         window.location.reload();

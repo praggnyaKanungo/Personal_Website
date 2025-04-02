@@ -244,9 +244,9 @@ function WelcomePage({ onStartTerminal }) {
       <Button onClick={onStartTerminal}>Launch Terminal</Button>
       
       <SocialLinks>
-        <SocialLink href="https://github.com/yourusername" target="_blank">GitHub</SocialLink>
-        <SocialLink href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</SocialLink>
-        <SocialLink href="mailto:your.email@example.com">Email</SocialLink>
+        <SocialLink href="https://github.com/praggnyakanungo" target="_blank">GitHub</SocialLink>
+        <SocialLink href="https://linkedin.com/in/praggnya-kanungo" target="_blank">LinkedIn</SocialLink>
+        <SocialLink href="mailto:ufx9hn@virginia.edu">Email</SocialLink>
       </SocialLinks>
       
       <Footer>© {new Date().getFullYear()} Praggnya Kanungo. All rights reserved.</Footer>
