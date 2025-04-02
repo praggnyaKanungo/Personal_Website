@@ -47,7 +47,7 @@ I plan to add more interactive features and projects to my portfolio as I contin
 
 ## Acknowledgements
 
-I would like to give a special thank you to my peer, Geethan Sundaram, who had mentioned in a conversation that making a personal website that resembles a terminal would be very cool. It was an idea that really stuck with me, and with his encouragements to actually try it out, I ended up pursuing it. Thanks, Geethan! 
+I would like to give a special thank you to my peer, Geethan Sundaram (gthsun), who had mentioned in a conversation that making a personal website that resembles a terminal would be very cool. It was an idea that really stuck with me, and with his encouragements to actually try it out, I ended up pursuing it. Thanks, Geethan! 
 
 ---
 
